@@ -62,7 +62,7 @@ class MainController extends Controller
                [
                  'Owner' =>
                    [
-                     'id' => '3463172000000170021',
+                     'id' => $this->getOwnerid(),
                    ],
                     'Closing_Date' => Carbon::now()->toDateString(),
                     'Deal_Name' => 'testdeal',
@@ -88,6 +88,13 @@ class MainController extends Controller
         $this->addTask($this->who_id,'Deals',$deal_insert_id);
 
         return redirect()->back()->with('message','Deal and Task created');
+    }
+
+    public function getOwnerid(){
+            $users = $this->curl_connect('users?type=AdminUsers');
+            $users_array=json_decode($users,true);
+
+            return $users_array["users"][0]["id"];
     }
 }
 
